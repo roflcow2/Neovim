@@ -1,4 +1,4 @@
--- Load plugins with no extra config needed
+-- Load plugins that just god damn work *dab*
 return {
 	'Townk/vim-autoclose',
 	'tpope/vim-fugitive',

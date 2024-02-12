@@ -1,3 +1,4 @@
+require("Roflcow2.functions")
 --Fat Cursor
 vim.opt.guicursor = ""
 
@@ -37,32 +38,11 @@ vim.opt.termguicolors = true
 vim.opt.signcolumn = 'auto'
 vim.opt.scrolloff = 10
 
-
-local function gitBranch()
-    local handle = io.popen('git rev-parse --abbrev-ref HEAD 2>/dev/null')
-    local result = handle:read("*a")
-    handle:close()
-    return result:gsub("\n", "")  -- Remove trailing newline
-end
 --shows current buffer number, filename, and file type
 --Sets status line always on
 vim.opt.laststatus=2
+--highlight status bar... would like to figure out how to highlight specific elements
+vim.opt.statusline:append("%#PmenuSel#")
 --Shows git branch
---vim.opt.statusline:append("
---vim.opt.statusline:append("%#PmenuSel#")
 vim.opt.statusline:append("Buffer: %n | %t%y")
-
-local function gitBranch()
-    local handle = io.popen('git rev-parse --abbrev-ref HEAD 2>/dev/null')
-    local result = handle:read("*a")
-    handle:close()
-    return result:gsub("\n", "")  -- Remove trailing newline
-end
-
--- Define a Lua function for statuslineGit
-local function statuslineGit()
-    local branchname = gitBranch()
-    return #branchname > 0 and ' {' .. branchname .. '} ' or ''
-end
 vim.opt.statusline:append(statuslineGit())
---%{statuslineGit()}
