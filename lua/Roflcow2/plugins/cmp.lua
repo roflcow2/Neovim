@@ -3,10 +3,7 @@ return {
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",
         "L3MON4D3/LuaSnip",
-        {
-            "rafamadriz/friendly-snippets",
-            config = function() require("luasnip.loaders.from_vscode").lazy_load() end,
-        },
+        "rafamadriz/friendly-snippets",
     },
     opts = function()
         vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
@@ -15,6 +12,13 @@ return {
         return {
             completion = {
                 completeopt = "menu,menuone,noinsert",
+            },
+
+            snippet = {
+                expand = function(args)
+                    require('luasnip').lsp_expand(args.body)
+                end,
+
             },
             mapping = cmp.mapping.preset.insert({
                 ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -33,8 +37,10 @@ return {
                     fallback()
                 end,
             }),
+
             sources = cmp.config.sources({
                 { name = "nvim_lsp" },
+                { name = "luasnip" },
                 { name = "path" },
             }, {
                     { name = "buffer" },
@@ -47,14 +53,8 @@ return {
             sorting = defaults.sorting,
         }
     end,
-    --[[keys = {
-        {"<C-b>", function() require('cmp').mapping.scroll_docs(-4) end, mode = "i"},
-        {"<C-f>", function() require('cmp').mapping.scroll_docs(4) end, mode = "i"},
-        {"<C-e>", function() require('cmp').mapping.abort() end, mode = "i"},
-        {"<C-o>", function() require('cmp').mapping.complete() end, mode = "i"},
-    },
-    --]]
     config = function(_, opts)
+        require("luasnip.loaders.from_vscode").lazy_load()
         for _, source in ipairs(opts.sources) do
             source.group_index = source.group_index or 1
         end
