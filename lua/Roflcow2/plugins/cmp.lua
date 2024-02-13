@@ -4,6 +4,7 @@ return {
         "hrsh7th/cmp-nvim-lsp",
         "L3MON4D3/LuaSnip",
         "rafamadriz/friendly-snippets",
+        "saadparwaiz1/cmp_luasnip",
     },
     opts = function()
         vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
